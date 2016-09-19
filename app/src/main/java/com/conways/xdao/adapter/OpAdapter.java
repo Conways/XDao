@@ -7,6 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.conways.xdao.R;
+import com.conways.xdao.db.DbConstant;
 import com.conways.xdao.db.Operation;
 import com.conways.xdao.holder.OpHolder;
 import com.conways.xdao.utils.TimeUtil;
@@ -49,6 +50,8 @@ public class OpAdapter extends RecyclerView.Adapter<OpHolder> {
         holder.tvCount.setText(operation.getCount() + "");
         holder.tvOperator.setText(operation.getOperator());
         holder.tvTime.setText(TimeUtil.getDataOfTypeOne(operation.getTime()));
+        holder.ivType.setImageResource(operation.getOperationType() == DbConstant.TYPE_IN ? R
+                .drawable.in : R.drawable.out);
 
     }
 

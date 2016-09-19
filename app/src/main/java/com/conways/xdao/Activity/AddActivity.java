@@ -23,6 +23,7 @@ public class AddActivity extends BaseActivity {
                 operation.setTime(System.currentTimeMillis());
                 operation.setCarType("a");
                 operation.setCount(20);
+                operation.setOperationType((int)(System.currentTimeMillis()%2));
                 if (XdaoDbManager.getInstance().add(operation)){
                     showMsg("suc");
                 }else{

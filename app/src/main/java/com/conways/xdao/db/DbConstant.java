@@ -19,8 +19,12 @@ public class DbConstant {
     public static final String ACTION_NOTE = "action_note";
     public static final String ACTION_STATE = "action_state";
     //条目字段状态类型
-    public static final int STATE_SYC = 0;
-    public static final int STATE_CREATE = 1;
+    public static final int STATE_SYC = 0x00;
+    public static final int STATE_CREATE = 0x01;
+    //操作类型
+    public static final int TYPE_IN=0x00;
+    public static final int TYPE_OUT=0x01;
+
 
 
     public static final String CREAT_TABLE_ACTION = "CREATE TABLE IF NOT EXISTS " +
