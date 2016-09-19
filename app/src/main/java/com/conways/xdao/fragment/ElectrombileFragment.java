@@ -4,17 +4,15 @@ import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.conways.xdao.Activity.AddActivity;
-import com.conways.xdao.Conmmon.DividerItemDecoration;
+import com.conways.xdao.common.DividerItemDecoration;
 import com.conways.xdao.R;
 import com.conways.xdao.adapter.OpAdapter;
 import com.conways.xdao.db.Operation;
@@ -77,7 +75,14 @@ public class ElectrombileFragment extends BaseFragment implements View.OnClickLi
         recyclerView = (RecyclerView) getActivity().findViewById(R.id.fragment_electrombile_action_list);
         recyclerView.addItemDecoration(new DividerItemDecoration(getActivity(), DividerItemDecoration.VERTICAL_LIST));
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
-        update();
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        if (!isHidden()){
+            update();
+        }
     }
 
     private void update(){

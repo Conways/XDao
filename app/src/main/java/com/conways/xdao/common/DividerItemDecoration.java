@@ -1,4 +1,4 @@
-package com.conways.xdao.Conmmon;
+package com.conways.xdao.common;
 
 import android.content.Context;
 import android.graphics.Canvas;
