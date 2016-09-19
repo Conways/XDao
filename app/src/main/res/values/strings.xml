@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">XDao</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="index_electrombile">库存</string>
+    <string name="index_parts">配件</string>
+</resources>
