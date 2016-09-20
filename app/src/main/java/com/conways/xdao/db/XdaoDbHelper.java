@@ -17,6 +17,8 @@ public class XdaoDbHelper extends SQLiteOpenHelper {
     @Override
     public void onCreate(SQLiteDatabase sqLiteDatabase) {
         sqLiteDatabase.execSQL(DbConstant.CREAT_TABLE_ACTION);
+        sqLiteDatabase.execSQL(DbConstant.CREAT_TAB_CAR_TYPE);
+        sqLiteDatabase.execSQL(DbConstant.CREAT_TAB_CORPERATOR);
     }
 
     @Override

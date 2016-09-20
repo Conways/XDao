@@ -4,6 +4,11 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.os.Parcel;
+
+import com.conways.xdao.entity.Color;
+import com.conways.xdao.entity.Operation;
+import com.conways.xdao.entity.Type;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -31,7 +36,7 @@ public class XdaoDbManager {
         xdaoDbManager = new XdaoDbHelper(context, DbConstant.DB_NAME, null, DbConstant.DB_VERSION);
     }
 
-    public boolean add(Operation operation) {
+    public boolean addOperation(Operation operation) {
         if (xdaoDbManager == null)
             return false;
         SQLiteDatabase sqLiteDatabase = xdaoDbManager.getWritableDatabase();
@@ -54,7 +59,7 @@ public class XdaoDbManager {
         return null;
     }
 
-    public List<Operation> getAll() {
+    public List<Operation> getOperations() {
         SQLiteDatabase sqLiteDatabase = xdaoDbManager.getWritableDatabase();
         Cursor cursor = sqLiteDatabase.query(DbConstant.TABLE_ACTION, null, null, null, null, null, null);
         return getOperation(cursor);
@@ -93,5 +98,91 @@ public class XdaoDbManager {
             }
         }
         return list;
+    }
+
+
+    public boolean addType(Type type) {
+        SQLiteDatabase sqLiteDatabase = xdaoDbManager.getWritableDatabase();
+        ContentValues contentValues = new ContentValues();
+        contentValues.put(DbConstant.CAR_TYPE_TYPE, type.getCarType());
+        contentValues.put(DbConstant.CAR_TYPE_COLORS, Colors2Bytes(type.getColors()));
+        return sqLiteDatabase.insert(DbConstant.TAB_CAR_TYPE, DbConstant.CAR_TYPE_ID, contentValues) != -1;
+    }
+
+    public List<Type> getTypes() {
+        SQLiteDatabase sqLiteDatabase = xdaoDbManager.getReadableDatabase();
+        Cursor cursor = sqLiteDatabase.query(DbConstant.TAB_CAR_TYPE, null, null, null, null, null, null);
+        return getTypes(cursor);
+    }
+
+
+    public boolean modifyType(Type type) {
+        SQLiteDatabase sqLiteDatabase = xdaoDbManager.getWritableDatabase();
+        ContentValues contentValues = new ContentValues();
+        contentValues.put(DbConstant.CAR_TYPE_COLORS, Colors2Bytes(type.getColors()));
+        return sqLiteDatabase.update(DbConstant.TAB_CAR_TYPE, contentValues, DbConstant
+                        .CAR_TYPE_ID + "=?",
+                new String[]{type.getId() + ""}) != -1;
+    }
+
+    private List<Type> getTypes(Cursor cursor) {
+        List<Type> types = new ArrayList<Type>();
+
+        if (cursor != null) {
+            try {
+                cursor.moveToFirst();
+                while (!cursor.isAfterLast()) {
+                    int id = cursor.getInt(cursor.getColumnIndex(DbConstant.CAR_TYPE_ID));
+                    String type = cursor.getString(cursor.getColumnIndex(DbConstant.CAR_TYPE_TYPE));
+                    byte[] blob = cursor.getBlob(cursor.getColumnIndex(DbConstant.CAR_TYPE_COLORS));
+                    List<Color> colors = bytes2Colors(blob);
+                    Type tp = new Type();
+                    tp.setId(id);
+                    tp.setCarType(type);
+                    tp.setColors(colors);
+                    types.add(tp);
+                    cursor.moveToNext();
+                }
+            } finally {
+                cursor.close();
+            }
+        }
+
+        return types;
+    }
+
+
+    /**
+     * 序列化color数组
+     *
+     * @param colors
+     * @return
+     */
+    private byte[] Colors2Bytes(List<Color> colors) {
+        Parcel parcel = Parcel.obtain();
+        try {
+            parcel.writeValue(colors);
+            return parcel.marshall();
+        } finally {
+            parcel.recycle();
+        }
+    }
+
+    /**
+     * 反序列化color数组
+     *
+     * @param bt
+     * @return
+     */
+    private List<Color> bytes2Colors(byte[] bt) {
+        Parcel parcel = Parcel.obtain();
+        try {
+            parcel.unmarshall(bt, 0, bt.length);
+            parcel.setDataPosition(0);
+            List<Color> colors = (List<Color>) parcel.readValue(List.class.getClassLoader());
+            return colors;
+        } finally {
+            parcel.recycle();
+        }
     }
 }

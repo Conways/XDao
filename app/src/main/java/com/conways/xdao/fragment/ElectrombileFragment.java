@@ -15,7 +15,7 @@ import com.conways.xdao.Activity.AddActivity;
 import com.conways.xdao.common.DividerItemDecoration;
 import com.conways.xdao.R;
 import com.conways.xdao.adapter.OpAdapter;
-import com.conways.xdao.db.Operation;
+import com.conways.xdao.entity.Operation;
 import com.conways.xdao.db.XdaoDbManager;
 
 import java.util.ArrayList;
@@ -90,7 +90,7 @@ public class ElectrombileFragment extends BaseFragment implements View.OnClickLi
             list=new ArrayList<Operation>();
         }
         list.clear();
-        list.addAll(XdaoDbManager.getInstance().getAll());
+        list.addAll(XdaoDbManager.getInstance().getOperations());
         if (opAdapter==null){
             opAdapter=new OpAdapter(getActivity(),list);
             recyclerView.setAdapter(opAdapter);

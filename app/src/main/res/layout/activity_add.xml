@@ -5,10 +5,148 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
+    <include layout="@layout/title_bar"/>
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:layout_marginLeft="32dp"
+        android:layout_marginRight="32dp"
+        android:layout_marginTop="8dp"
+        android:background="@drawable/rect_stoken_main_white">
+
+        <EditText
+            android:id="@+id/activity_add_car_type"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginRight="48dp"
+            android:background="@null"
+            android:hint="车型"
+            android:paddingLeft="@dimen/horizontal_margin"
+            android:singleLine="true"
+            android:textColor="@color/black"
+            android:textSize="@dimen/text_size_content"/>
+
+        <ImageView
+            android:id="@+id/activity_add_car_type_more"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:layout_gravity="right|center_vertical"
+            android:padding="16dp"
+            android:src="@drawable/arrows_down"/>
+    </FrameLayout>
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:layout_marginLeft="32dp"
+        android:layout_marginRight="32dp"
+        android:layout_marginTop="8dp"
+        android:background="@drawable/rect_stoken_main_white">
+
+        <EditText
+            android:id="@+id/activity_add_color"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginRight="48dp"
+            android:background="@null"
+            android:hint="颜色"
+            android:paddingLeft="@dimen/horizontal_margin"
+            android:singleLine="true"
+            android:textColor="@color/black"
+            android:textSize="@dimen/text_size_content"/>
+
+        <ImageView
+            android:id="@+id/activity_add_color_more"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:layout_gravity="right|center_vertical"
+            android:padding="16dp"
+            android:src="@drawable/arrows_down"/>
+    </FrameLayout>
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:layout_marginLeft="32dp"
+        android:layout_marginRight="32dp"
+        android:layout_marginTop="8dp"
+        android:background="@drawable/rect_stoken_main_white">
+
+        <EditText
+            android:id="@+id/activity_add_count"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginRight="48dp"
+            android:background="@null"
+            android:hint="数量"
+            android:paddingLeft="@dimen/horizontal_margin"
+            android:singleLine="true"
+            android:textColor="@color/black"
+            android:textSize="@dimen/text_size_content"/>
+
+        <ImageView
+            android:id="@+id/activity_add_count_more"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:layout_gravity="right|center_vertical"
+            android:padding="16dp"
+            android:src="@drawable/arrows_down"/>
+    </FrameLayout>
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:layout_marginLeft="32dp"
+        android:layout_marginRight="32dp"
+        android:layout_marginTop="8dp"
+        android:background="@drawable/rect_stoken_main_white">
+
+        <EditText
+            android:id="@+id/activity_add_operator"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginRight="48dp"
+            android:background="@null"
+            android:hint="操作人"
+            android:paddingLeft="@dimen/horizontal_margin"
+            android:singleLine="true"
+            android:textColor="@color/black"
+            android:textSize="@dimen/text_size_content"/>
+
+        <ImageView
+            android:id="@+id/activity_add_operator_more"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:layout_gravity="right|center_vertical"
+            android:padding="16dp"
+            android:src="@drawable/arrows_down"/>
+    </FrameLayout>
+
+    <EditText
+        android:id="@+id/activity_add_note"
+        android:layout_width="match_parent"
+        android:layout_height="128dp"
+        android:layout_marginLeft="32dp"
+        android:layout_marginRight="32dp"
+        android:layout_marginTop="8dp"
+        android:background="@drawable/rect_stoken_main_white"
+        android:gravity="left|top"
+        android:hint="备注"
+        android:paddingLeft="@dimen/horizontal_margin"
+        android:textColor="@color/black"
+        android:textSize="@dimen/text_size_content"/>
+
     <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="New Button"
-        android:id="@+id/button"
-        android:layout_gravity="center_horizontal"/>
+        android:id="@+id/activity_add_save"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:background="@drawable/rect_solid_main"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginLeft="32dp"
+        android:layout_marginRight="32dp"
+        android:layout_marginTop="8dp"
+        android:textSize="@dimen/text_size_title"
+        android:textColor="@color/white"
+        android:text="保存"/>
 </LinearLayout>

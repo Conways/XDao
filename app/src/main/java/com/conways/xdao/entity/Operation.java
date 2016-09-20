@@ -1,4 +1,4 @@
-package com.conways.xdao.db;
+package com.conways.xdao.entity;
 
 import android.os.Parcel;
 import android.os.Parcelable;
@@ -12,6 +12,11 @@ public class Operation implements Parcelable {
         super();
     }
 
+    public Operation(int operationType, long time, int state) {
+        this.operationType = operationType;
+        this.time = time;
+        this.state = state;
+    }
 
     public Operation(int id, int operationType, int count, long time, String carType, String carColor, String operator, String note, int state) {
         this.id = id;
