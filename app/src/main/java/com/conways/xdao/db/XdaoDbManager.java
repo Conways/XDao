@@ -9,8 +9,12 @@ import android.os.Parcel;
 import com.conways.xdao.entity.Color;
 import com.conways.xdao.entity.Operation;
 import com.conways.xdao.entity.Type;
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -46,7 +50,7 @@ public class XdaoDbManager {
         ContentValues contentValues = new ContentValues();
         contentValues.put(DbConstant.ACTION_TYPE, operation.getOperationType());
         contentValues.put(DbConstant.ACTION_COUNT, operation.getCount());
-        contentValues.put(DbConstant.ACTION_TIME, operation.getTime());
+        contentValues.put(DbConstant.ACTION_TIME, operation.getTime()+"");
         contentValues.put(DbConstant.ACTION_CAR_TYPE, operation.getCarType());
         contentValues.put(DbConstant.ACTION_CAR_COLOR, operation.getCarColor());
         contentValues.put(DbConstant.ACTION_OPERATION, operation.getOperator());
@@ -83,7 +87,7 @@ public class XdaoDbManager {
                     int id = cursor.getInt(cursor.getColumnIndex(DbConstant.ACTION_ID));
                     int opType = cursor.getInt(cursor.getColumnIndex(DbConstant.ACTION_TYPE));
                     int count = cursor.getInt(cursor.getColumnIndex(DbConstant.ACTION_COUNT));
-                    int time = cursor.getInt(cursor.getColumnIndex(DbConstant.ACTION_TIME));
+                    long time = cursor.getLong(cursor.getColumnIndex(DbConstant.ACTION_TIME));
                     String carType = cursor.getString(cursor.getColumnIndex(DbConstant.ACTION_CAR_TYPE));
                     String color = cursor.getString(cursor.getColumnIndex(DbConstant.ACTION_CAR_COLOR));
                     String operator = cursor.getString(cursor.getColumnIndex(DbConstant.ACTION_OPERATION));
@@ -105,7 +109,7 @@ public class XdaoDbManager {
         SQLiteDatabase sqLiteDatabase = xdaoDbManager.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
         contentValues.put(DbConstant.CAR_TYPE_TYPE, type.getCarType());
-        contentValues.put(DbConstant.CAR_TYPE_COLORS, Colors2Bytes(type.getColors()));
+        contentValues.put(DbConstant.CAR_TYPE_COLORS, new Gson().toJson(type.getColors()));
         return sqLiteDatabase.insert(DbConstant.TAB_CAR_TYPE, DbConstant.CAR_TYPE_ID, contentValues) != -1;
     }
 
@@ -119,7 +123,7 @@ public class XdaoDbManager {
     public boolean modifyType(Type type) {
         SQLiteDatabase sqLiteDatabase = xdaoDbManager.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
-        contentValues.put(DbConstant.CAR_TYPE_COLORS, Colors2Bytes(type.getColors()));
+        contentValues.put(DbConstant.CAR_TYPE_COLORS, new Gson().toJson(type.getColors()));
         return sqLiteDatabase.update(DbConstant.TAB_CAR_TYPE, contentValues, DbConstant
                         .CAR_TYPE_ID + "=?",
                 new String[]{type.getId() + ""}) != -1;
@@ -134,8 +138,11 @@ public class XdaoDbManager {
                 while (!cursor.isAfterLast()) {
                     int id = cursor.getInt(cursor.getColumnIndex(DbConstant.CAR_TYPE_ID));
                     String type = cursor.getString(cursor.getColumnIndex(DbConstant.CAR_TYPE_TYPE));
-                    byte[] blob = cursor.getBlob(cursor.getColumnIndex(DbConstant.CAR_TYPE_COLORS));
-                    List<Color> colors = bytes2Colors(blob);
+                    String color = cursor.getString(cursor.getColumnIndex(DbConstant
+                            .CAR_TYPE_COLORS));
+                    Gson gson = new Gson();
+                    List<Color> colors = gson.fromJson(color, new TypeToken<List<Color>>() {
+                    }.getType());
                     Type tp = new Type();
                     tp.setId(id);
                     tp.setCarType(type);
@@ -152,37 +159,4 @@ public class XdaoDbManager {
     }
 
 
-    /**
-     * 序列化color数组
-     *
-     * @param colors
-     * @return
-     */
-    private byte[] Colors2Bytes(List<Color> colors) {
-        Parcel parcel = Parcel.obtain();
-        try {
-            parcel.writeValue(colors);
-            return parcel.marshall();
-        } finally {
-            parcel.recycle();
-        }
-    }
-
-    /**
-     * 反序列化color数组
-     *
-     * @param bt
-     * @return
-     */
-    private List<Color> bytes2Colors(byte[] bt) {
-        Parcel parcel = Parcel.obtain();
-        try {
-            parcel.unmarshall(bt, 0, bt.length);
-            parcel.setDataPosition(0);
-            List<Color> colors = (List<Color>) parcel.readValue(List.class.getClassLoader());
-            return colors;
-        } finally {
-            parcel.recycle();
-        }
-    }
 }

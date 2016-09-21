@@ -73,7 +73,8 @@ public class ElectrombileFragment extends BaseFragment implements View.OnClickLi
         tvAdd.setOnClickListener(this);
         tvOut.setOnClickListener(this);
         recyclerView = (RecyclerView) getActivity().findViewById(R.id.fragment_electrombile_action_list);
-        recyclerView.addItemDecoration(new DividerItemDecoration(getActivity(), DividerItemDecoration.VERTICAL_LIST));
+        recyclerView.addItemDecoration(new DividerItemDecoration(getActivity(),
+                DividerItemDecoration.VERTICAL_LIST,R.drawable.item_line));
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
     }
 

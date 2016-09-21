@@ -1,6 +1,7 @@
 package com.conways.xdao.utils;
 
 import java.text.SimpleDateFormat;
+import java.util.Date;
 
 /**
  * Created by John on 2016/9/19.
@@ -12,7 +13,7 @@ public class TimeUtil {
      * @return
      */
     public static String getDataOfTypeOne(long time) {
-        return getDataByType(time,"yyyy-mm-dd hh:mm");
+        return getDataByType(time,"yyyy-MM-dd HH:mm");
     }
 
     /**
@@ -22,8 +23,8 @@ public class TimeUtil {
      * @return
      */
     public static String getDataByType(long time, String format) {
-        SimpleDateFormat formatter = new SimpleDateFormat(format);
-        return formatter.format(time);
+        SimpleDateFormat dateFormat = new SimpleDateFormat(format);
+        return dateFormat.format(new Date(time));
     }
 
 
