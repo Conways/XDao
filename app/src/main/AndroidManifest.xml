@@ -18,6 +18,10 @@
         </activity>
         <activity android:name=".Activity.AddActivity">
         </activity>
+        <activity android:name=".Activity.OutActivity">
+        </activity>
+        <activity android:name=".Activity.LeftActivity">
+        </activity>
     </application>
 
 </manifest>

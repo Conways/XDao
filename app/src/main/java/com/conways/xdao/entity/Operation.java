@@ -3,6 +3,8 @@ package com.conways.xdao.entity;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import java.util.Comparator;
+
 /**
  * Created by John on 2016/9/19.
  */
@@ -171,4 +173,18 @@ public class Operation implements Parcelable {
             return new Operation[size];
         }
     };
+
+
+    public static class TimeCompare implements Comparator<Operation> {
+        @Override
+        public int compare(Operation operation, Operation t1) {
+            if (t1.getTime() - operation.getTime() > 0) {
+                return 1;
+            } else if (t1.getTime() - operation.getTime() < 0) {
+                return -1;
+            } else {
+                return 0;
+            }
+        }
+    }
 }

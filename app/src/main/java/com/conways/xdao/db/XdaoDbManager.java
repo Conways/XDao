@@ -8,6 +8,7 @@ import android.os.Parcel;
 
 import com.conways.xdao.entity.Color;
 import com.conways.xdao.entity.Operation;
+import com.conways.xdao.entity.Operator;
 import com.conways.xdao.entity.Type;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
@@ -23,10 +24,6 @@ import java.util.List;
 public class XdaoDbManager {
     private static XdaoDbManager ourInstance = new XdaoDbManager();
     private XdaoDbHelper xdaoDbManager;
-    private int inOfyesToday;
-    private int inAll;
-    private int outALL;
-    private int left;
 
     public static XdaoDbManager getInstance() {
         return ourInstance;
@@ -40,6 +37,12 @@ public class XdaoDbManager {
         xdaoDbManager = new XdaoDbHelper(context, DbConstant.DB_NAME, null, DbConstant.DB_VERSION);
     }
 
+    /**
+     * 添加一项仓库操作
+     *
+     * @param operation
+     * @return
+     */
     public boolean addOperation(Operation operation) {
         if (xdaoDbManager == null)
             return false;
@@ -50,7 +53,7 @@ public class XdaoDbManager {
         ContentValues contentValues = new ContentValues();
         contentValues.put(DbConstant.ACTION_TYPE, operation.getOperationType());
         contentValues.put(DbConstant.ACTION_COUNT, operation.getCount());
-        contentValues.put(DbConstant.ACTION_TIME, operation.getTime()+"");
+        contentValues.put(DbConstant.ACTION_TIME, operation.getTime() + "");
         contentValues.put(DbConstant.ACTION_CAR_TYPE, operation.getCarType());
         contentValues.put(DbConstant.ACTION_CAR_COLOR, operation.getCarColor());
         contentValues.put(DbConstant.ACTION_OPERATION, operation.getOperator());
@@ -59,24 +62,40 @@ public class XdaoDbManager {
         return sqLiteDatabase.insert(DbConstant.TABLE_ACTION, DbConstant.ACTION_ID, contentValues) != -1;
     }
 
-    public List<Operation> getIn() {
-        return null;
-    }
-
+    /**
+     * 获取所有的仓库操作
+     *
+     * @return
+     */
     public List<Operation> getOperations() {
         SQLiteDatabase sqLiteDatabase = xdaoDbManager.getWritableDatabase();
         Cursor cursor = sqLiteDatabase.query(DbConstant.TABLE_ACTION, null, null, null, null, null, null);
         return getOperation(cursor);
     }
 
-
-    public List<Operation> getOut() {
-        return null;
+    /**
+     * 获取所有的入库操作
+     *
+     * @return
+     */
+    public List<Operation> getInOperations() {
+        SQLiteDatabase sqLiteDatabase = xdaoDbManager.getWritableDatabase();
+        Cursor cursor = sqLiteDatabase.query(DbConstant.TABLE_ACTION, null, null, null, null, null, null);
+        return getOperation(cursor);
     }
 
-    public int getLeft() {
-        return 0;
+    /**
+     * 获取所有的出库操作
+     *
+     * @return
+     */
+    public List<Operation> getOutOperations() {
+        SQLiteDatabase sqLiteDatabase = xdaoDbManager.getWritableDatabase();
+        Cursor cursor = sqLiteDatabase.query(DbConstant.TABLE_ACTION, null, null, null, null, null, null);
+        return getOperation(cursor);
     }
+
+
 
     private List<Operation> getOperation(Cursor cursor) {
         List<Operation> list = new ArrayList<Operation>();
@@ -104,7 +123,11 @@ public class XdaoDbManager {
         return list;
     }
 
-
+    /**
+     * 添加一款车型
+     * @param type
+     * @return
+     */
     public boolean addType(Type type) {
         SQLiteDatabase sqLiteDatabase = xdaoDbManager.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
@@ -113,13 +136,21 @@ public class XdaoDbManager {
         return sqLiteDatabase.insert(DbConstant.TAB_CAR_TYPE, DbConstant.CAR_TYPE_ID, contentValues) != -1;
     }
 
+    /**
+     * 获取所有的车型
+     * @return
+     */
     public List<Type> getTypes() {
         SQLiteDatabase sqLiteDatabase = xdaoDbManager.getReadableDatabase();
         Cursor cursor = sqLiteDatabase.query(DbConstant.TAB_CAR_TYPE, null, null, null, null, null, null);
         return getTypes(cursor);
     }
 
-
+    /**
+     * 更新一款车型
+     * @param type
+     * @return
+     */
     public boolean modifyType(Type type) {
         SQLiteDatabase sqLiteDatabase = xdaoDbManager.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
@@ -156,6 +187,51 @@ public class XdaoDbManager {
         }
 
         return types;
+    }
+
+    /**
+     * 添加一条操作人记录
+     * @param operator
+     * @return
+     */
+    public boolean addOperator(Operator operator) {
+        SQLiteDatabase sqLiteDatabase = xdaoDbManager.getWritableDatabase();
+        ContentValues contentValues = new ContentValues();
+        contentValues.put(DbConstant.CORPERATOR_NAME, operator.getName());
+        return sqLiteDatabase.insert(DbConstant.TAB_CORPERATOR, DbConstant.CORPERATOR_ID, contentValues) != -1;
+    }
+
+
+    /**
+     * 获取所有的操作人
+     * @return
+     */
+    public List<Operator> getOperators() {
+        SQLiteDatabase sqLiteDatabase = xdaoDbManager.getReadableDatabase();
+        Cursor cursor = sqLiteDatabase.query(DbConstant.TAB_CORPERATOR, null, null, null, null, null, null);
+        return getOperator(cursor);
+    }
+
+
+    private List<Operator> getOperator(Cursor cursor) {
+        List<Operator> operators = new ArrayList<Operator>();
+
+        if (cursor != null) {
+            try {
+                cursor.moveToFirst();
+                while (!cursor.isAfterLast()) {
+                    int id = cursor.getInt(cursor.getColumnIndex(DbConstant.CORPERATOR_ID));
+                    String name = cursor.getString(cursor.getColumnIndex(DbConstant.CORPERATOR_NAME));
+                    Operator operator = new Operator(id, name);
+                    operators.add(operator);
+                    cursor.moveToNext();
+                }
+            } finally {
+                cursor.close();
+            }
+        }
+
+        return operators;
     }
 
 

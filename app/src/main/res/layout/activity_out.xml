@@ -1,0 +1,152 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <include layout="@layout/title_bar"/>
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:layout_marginLeft="32dp"
+        android:layout_marginRight="32dp"
+        android:layout_marginTop="8dp"
+        android:background="@drawable/rect_stoken_main_white">
+
+        <EditText
+            android:id="@+id/activity_out_car_type"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginRight="48dp"
+            android:background="@null"
+            android:hint="车型"
+            android:paddingLeft="@dimen/horizontal_margin"
+            android:singleLine="true"
+            android:textColor="@color/black"
+            android:textSize="@dimen/text_size_content"/>
+
+        <ImageView
+            android:id="@+id/activity_out_car_type_more"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:layout_gravity="right|center_vertical"
+            android:padding="16dp"
+            android:src="@drawable/arrows_down"/>
+    </FrameLayout>
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:layout_marginLeft="32dp"
+        android:layout_marginRight="32dp"
+        android:layout_marginTop="8dp"
+        android:background="@drawable/rect_stoken_main_white">
+
+        <EditText
+            android:id="@+id/activity_out_color"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginRight="48dp"
+            android:background="@null"
+            android:hint="颜色"
+            android:paddingLeft="@dimen/horizontal_margin"
+            android:singleLine="true"
+            android:textColor="@color/black"
+            android:textSize="@dimen/text_size_content"/>
+
+        <ImageView
+            android:id="@+id/activity_out_color_more"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:layout_gravity="right|center_vertical"
+            android:padding="16dp"
+            android:src="@drawable/arrows_down"/>
+    </FrameLayout>
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:layout_marginLeft="32dp"
+        android:layout_marginRight="32dp"
+        android:layout_marginTop="8dp"
+        android:background="@drawable/rect_stoken_main_white">
+
+        <EditText
+            android:id="@+id/activity_out_count"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginRight="48dp"
+            android:background="@null"
+            android:hint="数量"
+            android:paddingLeft="@dimen/horizontal_margin"
+            android:singleLine="true"
+            android:textColor="@color/black"
+            android:textSize="@dimen/text_size_content"/>
+
+        <ImageView
+            android:id="@+id/activity_out_count_more"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:layout_gravity="right|center_vertical"
+            android:padding="16dp"
+            android:src="@drawable/arrows_down"/>
+    </FrameLayout>
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:layout_marginLeft="32dp"
+        android:layout_marginRight="32dp"
+        android:layout_marginTop="8dp"
+        android:background="@drawable/rect_stoken_main_white">
+
+        <EditText
+            android:id="@+id/activity_out_operator"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginRight="48dp"
+            android:background="@null"
+            android:hint="操作人"
+            android:paddingLeft="@dimen/horizontal_margin"
+            android:singleLine="true"
+            android:textColor="@color/black"
+            android:textSize="@dimen/text_size_content"/>
+
+        <ImageView
+            android:id="@+id/activity_out_operator_more"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:layout_gravity="right|center_vertical"
+            android:padding="16dp"
+            android:src="@drawable/arrows_down"/>
+    </FrameLayout>
+
+    <EditText
+        android:id="@+id/activity_out_note"
+        android:layout_width="match_parent"
+        android:layout_height="128dp"
+        android:layout_marginLeft="32dp"
+        android:layout_marginRight="32dp"
+        android:layout_marginTop="8dp"
+        android:background="@drawable/rect_stoken_main_white"
+        android:gravity="left|top"
+        android:hint="备注"
+        android:paddingLeft="@dimen/horizontal_margin"
+        android:textColor="@color/black"
+        android:textSize="@dimen/text_size_content"/>
+
+    <Button
+        android:id="@+id/activity_out_save"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:background="@drawable/rect_solid_main"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginLeft="32dp"
+        android:layout_marginRight="32dp"
+        android:layout_marginTop="8dp"
+        android:textSize="@dimen/text_size_title"
+        android:textColor="@color/white"
+        android:text="出库"/>
+</LinearLayout>

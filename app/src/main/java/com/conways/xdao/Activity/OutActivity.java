@@ -29,8 +29,7 @@ import com.conways.xdao.utils.StringUtil;
 import java.util.ArrayList;
 import java.util.List;
 
-
-public class AddActivity extends BaseActivity implements View.OnClickListener {
+public class OutActivity extends BaseActivity implements View.OnClickListener {
 
     private TextView tvTitle;
     private TextView tvBack;
@@ -44,7 +43,7 @@ public class AddActivity extends BaseActivity implements View.OnClickListener {
     private ImageView ivOpratorMore;
 
     private EditText etNote;
-    private Button btSave;
+    private Button btOut;
 
 
     private List<Type> types;
@@ -53,7 +52,7 @@ public class AddActivity extends BaseActivity implements View.OnClickListener {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_add);
+        setContentView(R.layout.activity_out);
         initTitle();
         init();
         initData();
@@ -61,7 +60,7 @@ public class AddActivity extends BaseActivity implements View.OnClickListener {
 
     private void initTitle() {
         tvTitle = (TextView) this.findViewById(R.id.title_title);
-        tvTitle.setText("添加库存");
+        tvTitle.setText("出库");
         tvBack = (TextView) this.findViewById(R.id.title_back);
         tvBack.setText("取消");
         tvBack.setOnClickListener(this);
@@ -69,28 +68,29 @@ public class AddActivity extends BaseActivity implements View.OnClickListener {
     }
 
     private void init() {
-        etType = (EditText) this.findViewById(R.id.activity_add_car_type);
-        ivTypeMore = (ImageView) this.findViewById(R.id.activity_add_car_type_more);
+        etType = (EditText) this.findViewById(R.id.activity_out_car_type);
+        etType.setEnabled(false);
+        ivTypeMore = (ImageView) this.findViewById(R.id.activity_out_car_type_more);
         ivTypeMore.setOnClickListener(this);
-        etColor = (EditText) this.findViewById(R.id.activity_add_color);
-        ivColorMore = (ImageView) this.findViewById(R.id.activity_add_color_more);
+        etColor = (EditText) this.findViewById(R.id.activity_out_color);
+        etColor.setEnabled(false);
+        ivColorMore = (ImageView) this.findViewById(R.id.activity_out_color_more);
         ivColorMore.setOnClickListener(this);
-        etCount = (EditText) this.findViewById(R.id.activity_add_count);
-        ivCountMore = (ImageView) this.findViewById(R.id.activity_add_count_more);
+        etCount = (EditText) this.findViewById(R.id.activity_out_count);
+        ivCountMore = (ImageView) this.findViewById(R.id.activity_out_count_more);
         ivCountMore.setOnClickListener(this);
-        etOperator = (EditText) this.findViewById(R.id.activity_add_operator);
-        ivOpratorMore = (ImageView) this.findViewById(R.id.activity_add_operator_more);
+        etOperator = (EditText) this.findViewById(R.id.activity_out_operator);
+        ivOpratorMore = (ImageView) this.findViewById(R.id.activity_out_operator_more);
         ivOpratorMore.setOnClickListener(this);
-        btSave = (Button) this.findViewById(R.id.activity_add_save);
-        btSave.setOnClickListener(this);
-        etNote = (EditText) this.findViewById(R.id.activity_add_note);
+        btOut = (Button) this.findViewById(R.id.activity_out_save);
+        btOut.setOnClickListener(this);
+        etNote = (EditText) this.findViewById(R.id.activity_out_note);
     }
 
 
     private void initData() {
         types = XdaoDbManager.getInstance().getTypes();
         operators = XdaoDbManager.getInstance().getOperators();
-
     }
 
     @Override
@@ -99,20 +99,20 @@ public class AddActivity extends BaseActivity implements View.OnClickListener {
             case R.id.title_back:
                 this.finish();
                 break;
-            case R.id.activity_add_car_type_more:
+            case R.id.activity_out_car_type_more:
                 showPop(Types.type);
                 break;
-            case R.id.activity_add_color_more:
+            case R.id.activity_out_color_more:
                 showPop(Types.colors);
                 break;
-            case R.id.activity_add_count_more:
+            case R.id.activity_out_count_more:
                 showPop(Types.count);
                 break;
-            case R.id.activity_add_operator_more:
+            case R.id.activity_out_operator_more:
                 showPop(Types.coperator);
                 break;
-            case R.id.activity_add_save:
-                save();
+            case R.id.activity_out_save:
+                out();
                 break;
             default:
                 break;
@@ -149,8 +149,8 @@ public class AddActivity extends BaseActivity implements View.OnClickListener {
                 break;
             case count:
                 height = DensityUtil.dip2px(this, 216) + DensityUtil.getStatusBarHeight(this);
-                for (int i = 0; i <100 ; i++) {
-                    list.add(i+"");
+                for (int i = 0; i < 100; i++) {
+                    list.add(i + "");
                 }
                 break;
             case coperator:
@@ -169,7 +169,7 @@ public class AddActivity extends BaseActivity implements View.OnClickListener {
         RecyclerView recyclerView = (RecyclerView) contentView.findViewById(R.id.pop_list_list);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.addItemDecoration(new DividerItemDecoration(this,
-                DividerItemDecoration.VERTICAL_LIST,R.drawable.item_line_white));
+                DividerItemDecoration.VERTICAL_LIST, R.drawable.item_line_white));
         recyclerView.setHasFixedSize(true);
         final PopAdapter popAdapter = new PopAdapter(list, this);
 
@@ -214,7 +214,7 @@ public class AddActivity extends BaseActivity implements View.OnClickListener {
     }
 
 
-    private void save() {
+    private void out() {
 
         if (StringUtil.isEmpty(etType.getText().toString())) {
             showMsg("车型不能为空");
@@ -248,7 +248,8 @@ public class AddActivity extends BaseActivity implements View.OnClickListener {
         }
 
         Log.i(TAG, "save: " + System.currentTimeMillis());
-        Operation operation = new Operation(DbConstant.CORPERATION_TYPE_IN, System.currentTimeMillis(), DbConstant.STATE_CREATE);
+        Operation operation = new Operation(DbConstant.CORPERATION_TYPE_OUT, System
+                .currentTimeMillis(), DbConstant.STATE_CREATE);
         operation.setCarType(etType.getText().toString());
         operation.setCarColor(etColor.getText().toString());
         operation.setCount(Integer.valueOf(etCount.getText().toString()));
@@ -256,53 +257,12 @@ public class AddActivity extends BaseActivity implements View.OnClickListener {
         operation.setNote(etNote.getText().toString());
 
         if (XdaoDbManager.getInstance().addOperation(operation)) {
-            showMsg("添加成功");
-            updateData();
+            showMsg("出库成功");
             updateOperator();
             this.finish();
         } else {
-            showMsg("添加失败");
+            showMsg("出库失败");
         }
-
-
-    }
-
-    private void updateData() {
-        Type type = null;
-        boolean hasColor = false;
-        for (int i = 0; i < types.size(); i++) {
-            if (types.get(i).getCarType().equals(etType.getText().toString().trim())) {
-                type = types.get(i);
-                List<Color> list = type.getColors();
-                for (int j = 0; j < list.size(); j++) {
-                    if (list.get(j).getColor().equals(etColor.getText().toString().trim())) {
-                        hasColor = true;
-                        break;
-                    }
-                }
-                break;
-            }
-
-        }
-
-        if (null == type) {
-            type = new Type();
-            type.setCarType(etType.getText().toString().trim());
-            Color color = new Color(etColor.getText().toString().trim());
-            List<Color> list = new ArrayList<Color>();
-            list.add(color);
-            type.setColors(list);
-            XdaoDbManager.getInstance().addType(type);
-
-        } else {
-            if (!hasColor) {
-                List<Color> list = type.getColors();
-                list.add(new Color(etColor.getText().toString().trim()));
-                type.setColors(list);
-                XdaoDbManager.getInstance().modifyType(type);
-            }
-        }
-
     }
 
     private void updateOperator() {
