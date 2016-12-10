@@ -14,7 +14,7 @@ import com.conways.xdao.R;
 import com.conways.xdao.fragment.ElectrombileFragment;
 import com.conways.xdao.fragment.PartsFragment;
 
-public class MainActivity extends FragmentActivity implements ElectrombileFragment.OnFragmentInteractionListener, View.OnClickListener,PartsFragment.OnFragmentInteractionListener {
+public class MainActivity extends FragmentActivity implements ElectrombileFragment.OnFragmentInteractionListener, View.OnClickListener, PartsFragment.OnFragmentInteractionListener {
     private static final String CURRENT_TAB = "current_tab";
     private static final String[] TAGS = {"electric", "parts"};
     private static final int ID_MENU_ELECTRIC = 0x001;
@@ -39,19 +39,18 @@ public class MainActivity extends FragmentActivity implements ElectrombileFragme
         setContentView(R.layout.activity_main);
         init();
         restoreFragment(savedInstanceState);
-        setSlectedTab(ID_MENU_ELECTRIC);
     }
 
     private void init() {
         fragmentManager = getSupportFragmentManager();
-        llElectric=(LinearLayout)this.findViewById(R.id.main_activity_electrombile);
-        llParts=(LinearLayout)this.findViewById(R.id.main_activity_parts);
+        llElectric = (LinearLayout) this.findViewById(R.id.main_activity_electrombile);
+        llParts = (LinearLayout) this.findViewById(R.id.main_activity_parts);
         llElectric.setOnClickListener(this);
         llParts.setOnClickListener(this);
         tvElectric = (TextView) this.findViewById(R.id.main_activity_electrombile_text);
         tvParts = (TextView) this.findViewById(R.id.main_activity_parts_text);
-        ivElectric=(ImageView)this.findViewById(R.id.main_activity_electrombile_icon);
-        ivparts=(ImageView)this.findViewById(R.id.main_activity_parts_icon);
+        ivElectric = (ImageView) this.findViewById(R.id.main_activity_electrombile_icon);
+        ivparts = (ImageView) this.findViewById(R.id.main_activity_parts_icon);
     }
 
 

@@ -12,6 +12,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.conways.xdao.Activity.AddActivity;
+import com.conways.xdao.Activity.LeftActivity;
 import com.conways.xdao.Activity.OutActivity;
 import com.conways.xdao.common.DividerItemDecoration;
 import com.conways.xdao.R;
@@ -112,16 +113,16 @@ public class ElectrombileFragment extends BaseFragment implements View.OnClickLi
             long tempTime = list.get(i).getTime();
             int tempCount = list.get(i).getCount();
             if (list.get(i).getOperationType() == DbConstant.CORPERATION_TYPE_IN) {
-                inAll = inAll+tempCount;
+                inAll = inAll + tempCount;
             } else {
-                outAll = outAll+tempCount;
+                outAll = outAll + tempCount;
                 if (tempTime > yesterdayZero && tempTime < todayZero) {
                     yesterday = +tempCount;
                 }
             }
         }
         tvYesterday.setText(yesterday + "");
-        tvleft.setText((inAll - outAll)+"");
+        tvleft.setText((inAll - outAll) + "");
 
     }
 
@@ -134,7 +135,9 @@ public class ElectrombileFragment extends BaseFragment implements View.OnClickLi
             case R.id.fragment_electrombile_out:
                 toTargetActivity(OutActivity.class);
                 break;
-
+            case R.id.fragment_electrombile_left:
+                toTargetActivity(LeftActivity.class);
+                break;
             default:
                 break;
         }
